@@ -1,3 +1,10 @@
+import LandingPageNavbar from "./_components/navbar";
+
 export default function Home() {
-  return <main>Home</main>;
+  return (
+    <main>
+      <LandingPageNavbar />
+      page
+    </main>
+  );
 }
