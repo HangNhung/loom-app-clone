@@ -1,8 +1,8 @@
 import React from "react";
 
-type Props = {};
+// type Props = {};
 
-const WorkSpaceId = (props: Props) => {
+const WorkSpaceId = () => {
   return <div>WorkSpaceId</div>;
 };
 
