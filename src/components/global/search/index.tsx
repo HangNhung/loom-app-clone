@@ -10,7 +10,9 @@ type Props = {
   workspaceId: string;
 };
 
-const Search = ({ workspaceId }: Props) => {
+const Search = ({ workspaceId }: Props): JSX.Element => {
+  console.log("workspaceId", workspaceId);
+
   const { query, onSearchQuery, isFetching, onUsers } = useSearch(
     "get-users",
     "USERS"
