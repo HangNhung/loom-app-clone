@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useQueryData } from "./useQueryData";
-import { searchUsers } from "@/actions/user";
 
-export const useSearch = (key: string, type: "USER") => {
-  const [querySearch, setQuerySearch] = useState("");
-  const [debound, setDebound] = useState("");
-  const [onUser, setOnUser] = useState<
+import { searchUsers } from "@/actions/user";
+import { useQueryData } from "./useQueryData";
+
+export const useSearch = (key: string, type: "USERS") => {
+  const [query, setQuery] = useState("");
+  const [debounce, setDebounce] = useState("");
+  const [onUsers, setOnUsers] = useState<
     | {
         id: string;
         subscription: {
@@ -19,48 +20,38 @@ export const useSearch = (key: string, type: "USER") => {
     | undefined
   >(undefined);
 
-  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setQuerySearch(value);
+  const onSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
   };
 
   useEffect(() => {
     const delayInputTimeoutId = setTimeout(() => {
-      setDebound(querySearch);
+      setDebounce(query);
     }, 1000);
-
     return () => clearTimeout(delayInputTimeoutId);
-  }, [querySearch]);
+  }, [query]);
 
   const { refetch, isFetching } = useQueryData(
-    [key, debound],
+    [key, debounce],
     async ({ queryKey }) => {
-      if (type === "USER") {
+      if (type === "USERS") {
         const users = await searchUsers(queryKey[1] as string);
         if (users.status === 200) {
-          setOnUser(users.data);
+          setOnUsers(users.data);
+          return users.data;
         }
       }
+      return []; // Return an empty array if no users are found
     }
+    // false
   );
 
   useEffect(() => {
-    if (debound) {
-      refetch();
-    }
-    if (!debound) {
-      setOnUser(undefined);
-    }
+    if (debounce) refetch();
+    if (!debounce) setOnUsers(undefined);
 
-    return () => {
-      debound;
-    };
-  }, [debound]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounce]);
 
-  return {
-    querySearch,
-    onSearch,
-    onUser,
-    isFetching,
-  };
+  return { onSearchQuery, query, isFetching, onUsers };
 };
