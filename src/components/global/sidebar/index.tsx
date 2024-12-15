@@ -14,7 +14,7 @@ import { useQueryData } from "@/hooks/useQueryData";
 import { WorkSpaceProps } from "@/types/index.type";
 import React from "react";
 import Modal from "../modal";
-import { PlusCircle } from "lucide-react";
+import { MenuIcon, PlusCircle } from "lucide-react";
 import Search from "../search";
 import { usePathname, useRouter } from "next/navigation";
 import { MENU_ITEMS } from "@/constants";
@@ -22,6 +22,14 @@ import SidebarItem from "./sidebar-item";
 import WorkspacePlaceholder from "./workspace-placeholder";
 import GlobalCard from "../global-card";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import InfoBar from "../info-bar";
 
 type Props = {
   activeWorkspaceId: string;
@@ -169,8 +177,24 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   );
 
   return (
-    <div>
-      <div className="md:block hidden h-full">{SidebarSection}</div>
+    <div className="full">
+      <InfoBar />
+      {/* // Sheet mobile and desktop */}
+      <div className="md:hidden fixed my-4">
+        <Sheet>
+          <SheetTrigger asChild className="ml-2">
+            <Button variant="ghost" className="mt-[2px]">
+              <MenuIcon />
+            </Button>
+          </SheetTrigger>
+          <SheetTitle className="hidden"></SheetTitle> {/*👈🏻 */}
+          <SheetDescription className="hidden"></SheetDescription> {/*👈🏻 */}
+          <SheetContent side={"left"} className="p-0 w-fit h-full">
+            {SidebarSection}
+          </SheetContent>
+        </Sheet>
+      </div>
+      <div className="hidden md:block h-full">{SidebarSection}</div>
     </div>
   );
 };
