@@ -38,7 +38,7 @@ const Folders = ({ workspaceId }: Props) => {
   // if (isFetched && folders) {
   // }
 
-  // Add Redux stuff for folders
+  // WIP: Add Redux stuff for folders
   // Optimistic variables =
   return (
     <div className="flex flex-col gap-4">
