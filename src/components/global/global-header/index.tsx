@@ -9,7 +9,7 @@ type Props = {
 
 const GlobalHeader = ({ workspace }: Props) => {
   // Pathname
-  const pathname = usePathname().split(`dashboard/${workspace.id}/`)[1];
+  const pathname = usePathname().split(`dashboard/${workspace.id}/`)[0];
   return (
     <article className="flex flex-col gap-2">
       <span className="text-[#707070] text-xs">

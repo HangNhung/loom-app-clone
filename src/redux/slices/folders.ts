@@ -9,7 +9,7 @@ type initialStateProps = {
     id: string;
     name: string;
     createdAt: Date;
-    workSpaceId: string | null;
+    workSpaceId?: string | null;
   })[];
 };
 

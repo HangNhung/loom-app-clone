@@ -4,6 +4,8 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme";
 import ReactQueryProvider from "@/react-query";
+import { ReduxProvider } from "@/redux/provider";
+import { Toaster } from "sonner";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -27,7 +29,10 @@ export default function RootLayout({
             attribute="class"
             defaultTheme="dark"
             disableTransitionOnChange>
-            <ReactQueryProvider>{children}</ReactQueryProvider>
+            <ReduxProvider>
+              <ReactQueryProvider>{children}</ReactQueryProvider>
+              <Toaster />
+            </ReduxProvider>
           </ThemeProvider>
         </body>
       </html>
