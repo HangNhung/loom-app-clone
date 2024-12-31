@@ -31,7 +31,7 @@ const VideoPreview = ({ videoId }: Props) => {
   if (status !== 200) router.push("/");
 
   const daysAgo = Math.floor(
-    (new Date().getTime() - video.createdAt.getTime()) / (24 * 60 * 60 * 1000)
+    (new Date().getTime() - video?.createdAt?.getTime()) / (24 * 60 * 60 * 1000)
   );
 
   useEffect(() => {
@@ -114,9 +114,9 @@ const VideoPreview = ({ videoId }: Props) => {
             defaultValue="Ai tools"
             triggers={["Ai tools", "Transcript", "Activity"]}>
             <AiTools
-            // videoId={videoId}
-            // trial={video.User?.trial!}
-            // plan={video.User?.subscription?.plan!}
+              videoId={videoId}
+              trial={video.User?.trial ?? false}
+              plan={video.User?.subscription?.plan ?? "FREE"}
             />
             <VideoTranscript transcript={video.summery!} />
             <Activities

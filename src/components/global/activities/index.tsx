@@ -17,7 +17,7 @@ const Activities = ({ author, videoId }: Props) => {
     getVideoComments(videoId)
   );
 
-  const { data: comments } = data as VideoCommentProps;
+  const comments = (data as VideoCommentProps)?.data || [];
 
   return (
     <TabsContent value="Activity" className="rounded-xl flex flex-col gap-y-5">

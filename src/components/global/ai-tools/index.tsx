@@ -4,13 +4,13 @@ import React from "react";
 import Loader from "../loader";
 import { Bot, FileTextIcon, Pencil, StarsIcon } from "lucide-react";
 
-// type Props = {
-//   plan: "PRO" | "FREE";
-//   trial: boolean;
-//   videoId: string;
-// };
+type Props = {
+  plan: "PRO" | "FREE";
+  trial: boolean;
+  videoId: string;
+};
 
-const AiTools = () => {
+const AiTools = ({ plan, trial, videoId }: Props) => {
   //Are they on a free plan?
   //have they already tried the AI feature?
   //if not? Try button

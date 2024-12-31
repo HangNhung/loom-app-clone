@@ -1,21 +1,29 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMutationData } from "@/hooks/useMutationData";
 import { useSearch } from "@/hooks/useSearch";
 import { User } from "lucide-react";
 
 import React from "react";
+import Loader from "../loader";
+import { inviteMembers } from "@/actions/user";
 
 type Props = {
   workspaceId: string;
 };
 
-const Search = ({ workspaceId }: Props): JSX.Element => {
-  console.log("workspaceId", workspaceId);
-
+const Search = ({ workspaceId }: Props) => {
   const { query, onSearchQuery, isFetching, onUsers } = useSearch(
     "get-users",
     "USERS"
+  );
+
+  const { mutate, isPending } = useMutationData(
+    ["invite-member"],
+    (data: { recieverId: string; email: string }) =>
+      inviteMembers(workspaceId, data.recieverId, data.email)
   );
 
   return (
@@ -53,6 +61,18 @@ const Search = ({ workspaceId }: Props): JSX.Element => {
                 <p className="lowercase text-xs bg-white px-2 rounded-lg text-[#1e1e1e]">
                   {user.subscription?.plan}
                 </p>
+              </div>
+              <div className="flex-1 flex justify-end items-center">
+                <Button
+                  onClick={() =>
+                    mutate({ recieverId: user.id, email: user.email })
+                  }
+                  variant={"default"}
+                  className="w-5/12 font-bold">
+                  <Loader state={isPending} color="#000">
+                    Invite
+                  </Loader>
+                </Button>
               </div>
             </div>
           ))}

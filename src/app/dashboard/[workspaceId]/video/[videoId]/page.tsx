@@ -1,7 +1,5 @@
-import { getUserProfile, getVideoComments } from "@/actions/user";
 import { getPreviewVideo } from "@/actions/workspace";
 import VideoPreview from "@/components/global/videos/preivew";
-
 import {
   dehydrate,
   HydrationBoundary,
@@ -23,21 +21,10 @@ const VideoPage = async ({ params }: Props) => {
     queryKey: ["preview-video"],
     queryFn: () => getPreviewVideo(videoId),
   });
-  await query.prefetchQuery({
-    queryKey: ["user-profile"],
-    queryFn: getUserProfile,
-  });
-
-  await query.prefetchQuery({
-    queryKey: ["video-comments"],
-    queryFn: () => getVideoComments(videoId),
-  });
 
   return (
     <HydrationBoundary state={dehydrate(query)}>
-      <div className="px-10">
-        <VideoPreview videoId={videoId} />
-      </div>
+      <VideoPreview videoId={videoId} />
     </HydrationBoundary>
   );
 };
