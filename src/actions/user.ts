@@ -11,10 +11,12 @@ export const sendEmail = async (
   html?: string
 ) => {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465, // Use 465 for SSL
+    secure: true, // true for SSL
     auth: {
-      user: process.env.MAILER_EMAIL,
-      pass: process.env.MAILER_PASSWORD,
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS, // Use the app password here
     },
   });
 
@@ -191,8 +193,6 @@ export const getVideoComments = async (Id: string) => {
         User: true,
       },
     });
-
-    console.log(comments, "comments");
 
     if (comments && comments.length > 0) {
       return { status: 200, data: comments };
